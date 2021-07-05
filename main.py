@@ -106,8 +106,10 @@ if __name__ == '__main__':
                                   s, s + args.batch_size,
                                   user_dict['train_user_set'])
             batch_loss, _, _, batch_cor = model(batch)
+
+            batch_loss = torch.mean(batch_loss)
             print(batch_loss, cor_loss)
-            input()
+            
             batch_loss = batch_loss
             optimizer.zero_grad()
             batch_loss.backward()
