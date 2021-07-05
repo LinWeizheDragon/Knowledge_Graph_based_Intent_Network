@@ -282,6 +282,13 @@ class Recommender(nn.Module):
         item_emb = self.all_embed[self.n_users:, :]
         # entity_gcn_emb: [n_entity, channel]
         # user_gcn_emb: [n_users, channel]
+        print('user_emb', user_emb.device)
+        print('item_emb', item_emb.device)
+        print('self.latent_emb', self.latent_emb.device)
+        print('self.edge_index', self.edge_index.device)
+        print('self.interact_mat', self.interact_mat.device)
+
+        
         entity_gcn_emb, user_gcn_emb, cor = self.gcn(user_emb,
                                                      item_emb,
                                                      self.latent_emb,
