@@ -129,7 +129,7 @@ def test(model, user_dict, n_params):
 
     count = 0
 
-    entity_gcn_emb, user_gcn_emb = model.generate()
+    entity_gcn_emb, user_gcn_emb = model.module.generate()
 
     for u_batch_id in range(n_user_batchs):
         start = u_batch_id * u_batch_size
@@ -152,7 +152,7 @@ def test(model, user_dict, n_params):
                 item_batch = torch.LongTensor(np.array(range(i_start, i_end))).view(i_end-i_start).to(device)
                 i_g_embddings = entity_gcn_emb[item_batch]
 
-                i_rate_batch = model.rating(u_g_embeddings, i_g_embddings).detach().cpu()
+                i_rate_batch = model.module.rating(u_g_embeddings, i_g_embddings).detach().cpu()
 
                 rate_batch[:, i_start: i_end] = i_rate_batch
                 i_count += i_rate_batch.shape[1]
@@ -162,7 +162,7 @@ def test(model, user_dict, n_params):
             # all-item test
             item_batch = torch.LongTensor(np.array(range(0, n_items))).view(n_items, -1).to(device)
             i_g_embddings = entity_gcn_emb[item_batch]
-            rate_batch = model.rating(u_g_embeddings, i_g_embddings).detach().cpu()
+            rate_batch = model.module.rating(u_g_embeddings, i_g_embddings).detach().cpu()
 
         user_batch_rating_uid = zip(rate_batch, user_list_batch)
         batch_result = pool.map(test_one_user, user_batch_rating_uid)

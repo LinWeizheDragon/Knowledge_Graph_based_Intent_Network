@@ -80,8 +80,8 @@ if __name__ == '__main__':
 
     """define model"""
     model = Recommender(n_params, args, graph, mean_mat_list[0]).to(device)
-    device_ids = [0, 1, 2] #必须从零开始(这里0表示第1块卡，1表示第2块卡.)
-    model = nn.DataParallel(model, device_ids=device_ids)
+    # device_ids = [0, 1, 2] #必须从零开始(这里0表示第1块卡，1表示第2块卡.)
+    model = nn.DataParallel(model)#, device_ids=device_ids)
 
     """define optimizer"""
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
@@ -102,6 +102,7 @@ if __name__ == '__main__':
         loss, s, cor_loss = 0, 0, 0
         train_s_t = time()
         while s + args.batch_size <= len(train_cf):
+            # print('running on', s, '/', len(train_cf))
             batch = get_feed_dict(train_cf_pairs,
                                   s, s + args.batch_size,
                                   user_dict['train_user_set'])
