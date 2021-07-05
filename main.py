@@ -7,6 +7,8 @@ __author__ = "huangtinglin"
 import random
 
 import torch
+import torch.nn as nn
+
 import numpy as np
 
 from time import time
@@ -78,6 +80,8 @@ if __name__ == '__main__':
 
     """define model"""
     model = Recommender(n_params, args, graph, mean_mat_list[0]).to(device)
+    device_ids = [0, 1] #必须从零开始(这里0表示第1块卡，1表示第2块卡.)
+    model = nn.DataParallel(model, device_ids=device_ids)
 
     """define optimizer"""
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
