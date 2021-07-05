@@ -108,8 +108,8 @@ if __name__ == '__main__':
             batch_loss, _, _, batch_cor = model(batch)
 
             batch_loss = torch.mean(batch_loss)
-            print(batch_loss, cor_loss)
-            
+            batch_cor = torch.mean(batch_cor)
+
             batch_loss = batch_loss
             optimizer.zero_grad()
             batch_loss.backward()
