@@ -286,11 +286,11 @@ class Recommender(nn.Module):
         self.edge_index = self.edge_index.to(user_emb.device)
         self.interact_mat = self.interact_mat.to(user_emb.device)
         
-        print('user_emb', user_emb.device)
-        print('item_emb', item_emb.device)
-        print('self.latent_emb', self.latent_emb.device)
-        print('self.edge_index', self.edge_index.device)
-        print('self.interact_mat', self.interact_mat.device)
+        # print('user_emb', user_emb.device)
+        # print('item_emb', item_emb.device)
+        # print('self.latent_emb', self.latent_emb.device)
+        # print('self.edge_index', self.edge_index.device)
+        # print('self.interact_mat', self.interact_mat.device)
 
         
         entity_gcn_emb, user_gcn_emb, cor = self.gcn(user_emb,
